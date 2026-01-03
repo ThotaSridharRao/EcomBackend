@@ -25,6 +25,10 @@ const addToCart = async (req, res) => {
     const { productId, qty, price } = req.body;
     const quantity = qty || 1;
 
+    if (!productId) {
+      return res.status(400).json({ message: 'Product ID is required' });
+    }
+
     let cart = await Cart.findOne({ user: req.user._id });
 
     if (!cart) {
